@@ -1,0 +1,90 @@
+
+*{
+    font-family: 'Fira Mono', monospace;
+}
+body {
+   background-image:url("../assets/img/mta-subway-map.jpg");
+    background-size: 100%;
+
+}
+
+header {
+    text-align: center;
+    background:#50A174;
+    color: #FFE100;
+}
+
+h1 {
+    font-size: 4em;
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
+    font-family: 'Diplomata SC', cursive;
+}
+
+h2 {
+    font-size: 3em;
+    padding-bottom: 2.5rem;
+    font-family: 'Faster One', cursive;
+    word-spacing:2em;
+    letter-spacing: .25rem; 
+
+}
+
+table {
+    margin: 2em auto;
+    width: 75%;
+    border:2px solid#FFE100;
+    background:#A2CBE7;
+}
+
+th, td {
+    padding: .5rem 1rem;
+}
+
+th {
+    font-size: 1.5rem;
+    background: #A2CBE7;
+    border-bottom:2px solid #FFE100;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background:rgb(116, 163, 194);
+    
+}
+
+tr:hover {
+    background:#50A174;
+}
+tr{
+    border-top:2px solid#FFE100;
+}
+input[type=text], label {
+    display: block;
+    width: 100%;
+    margin-bottom: .5rem;
+}
+
+input[type=text] {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
+
+input[type=submit] {
+    width: 30%;
+    font-size: 1.5rem;
+    padding: .5rem 1.25rem;
+}
+form{
+    width: 70%;
+    margin: auto;
+    background: rgba(80, 161, 116,.9);
+    padding:2rem;
+    border:2px solid #FFE100;
+    
+}
+.form-group {
+    /* margin: auto; */
+    /* width: 75%; */
+    font-size: 1.25rem;
+}
