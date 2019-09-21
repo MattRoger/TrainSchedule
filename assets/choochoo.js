@@ -7,10 +7,12 @@ var firebaseConfig = {
     storageBucket: "",
     messagingSenderId: "664076151830",
     appId: "1:664076151830:web:1cffef0fcf003deb2d9937"
-  };
+};
   firebase.initializeApp(firebaseConfig)
   var database=firebase.database();
-
+  
+  var now=moment().format("HH:hh"); 
+  console.log("now"+now);
 
 $("#submit").on("click" ,function(event){
     event.preventDefault();
@@ -19,18 +21,25 @@ $("#submit").on("click" ,function(event){
     var destination=$("#destination").val().trim();
     var firstTrain=$("#origin-arrive").val().trim();
     var frequencyTrain=$("#frequency").val().trim();
+  var firstTimeConverted= moment(firstTrain, "HH:hh").subtract(1, "years");
+  console.log(firstTimeConverted);
+  
     database.ref().push({
         name:trainName,
         destination: destination,
         start: firstTrain,
         frequency:frequencyTrain,
-
+        
     })
-    
+    // start time-current time=x   x%frequency=y
+    // y-frequency= mins away
+    // mins away+current time+next train
+    // var nextTrain= 
 })
 database.ref().on("child_added", function(childSnapshot){
-    console.log(childSnapshot.val().name),
-
+    console.log(childSnapshot.val().start),
+    console.log(childSnapshot.val().frequency),
+    
     $("table").append($("<tr>").append(
         $("<td>").text(childSnapshot.val().name),
         $("<td>").text(childSnapshot.val().destination),
@@ -39,5 +48,5 @@ database.ref().on("child_added", function(childSnapshot){
         $("<td>").text("next train"),
         $("<td>").text("mins away"),
 
-    ))
+        ))
 })
