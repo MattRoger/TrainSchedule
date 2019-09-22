@@ -11,42 +11,51 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig)
   var database=firebase.database();
   
-  var now=moment().format("HH:hh"); 
+  var now=moment().format("HH:mm"); 
   console.log("now"+now);
-
-$("#submit").on("click" ,function(event){
-    event.preventDefault();
-    console.log("clicked");
-    var trainName=$("#t-name").val().trim();
-    var destination=$("#destination").val().trim();
-    var firstTrain=$("#origin-arrive").val().trim();
-    var frequencyTrain=$("#frequency").val().trim();
-  var firstTimeConverted= moment(firstTrain, "HH:hh").subtract(1, "years");
-  console.log(firstTimeConverted);
+  var nextTrain;
+  var minsNextTrain;
   
+  $("#submit").on("click" ,function(event){
+      event.preventDefault();
+   
+      var trainName=$("#t-name").val().trim();
+      var destination=$("#destination").val().trim();
+      var firstTrain=$("#origin-arrive").val().trim();
+      
+      var frequencyTrain=$("#frequency").val().trim();
+     var firstTrainC=moment(firstTrain, "HH:mm").subtract(1,"years");
+  
+     var diffTime=moment().diff(moment(firstTrainC),"minutes")
+   
+     var tRemainder= diffTime % frequencyTrain;
+ 
+     var minsNextTrain= frequencyTrain-tRemainder;
+  
+     var nextTrain=moment().add(minsNextTrain, "minutes").format("HH:mm")
+
     database.ref().push({
         name:trainName,
         destination: destination,
         start: firstTrain,
         frequency:frequencyTrain,
+        minsNextTrain:minsNextTrain,
+        nextTrain:nextTrain,
         
     })
-    // start time-current time=x   x%frequency=y
-    // y-frequency= mins away
-    // mins away+current time+next train
-    // var nextTrain= 
+ 
+    
 })
 database.ref().on("child_added", function(childSnapshot){
-    console.log(childSnapshot.val().start),
-    console.log(childSnapshot.val().frequency),
+
     
     $("table").append($("<tr>").append(
         $("<td>").text(childSnapshot.val().name),
         $("<td>").text(childSnapshot.val().destination),
         $("<td>").text(childSnapshot.val().start),
         $("<td>").text(childSnapshot.val().frequency),
-        $("<td>").text("next train"),
-        $("<td>").text("mins away"),
+        $("<td>").text(childSnapshot.val().minsNextTrain+" Minutes"),
+        $("<td>").text(childSnapshot.val().nextTrain+" Next Train Arrives"),
 
         ))
 })
